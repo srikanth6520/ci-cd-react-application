@@ -1,9 +1,15 @@
 # ci-cd-react-application
 
-This is a basic React application showing "Hello, React World!".
+This is a basic React application that displays "Hello, React World!".
 
-## How to Run
+## File Structure
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start the app: `npm start`
+ci-cd-react-application/
+├── public/
+│   └── index.html
+├── src/
+│   ├── App.js
+│   └── index.js
+├── package.json
+└── README.md
+
