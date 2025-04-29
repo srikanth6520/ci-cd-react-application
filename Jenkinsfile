@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'SONARQUBE_URL')
+    }
+
     environment {
         DOCKERHUB_CREDENTIALS_ID = 'docker-hub-credentials'   
         SONARQUBE_CREDENTIALS_ID = 'sonarqube-token'   
@@ -13,12 +17,8 @@ pipeline {
                 checkout scm
             }
             post {
-                success {
-                    echo 'Checkout successful.'
-                }
-                failure {
-                    echo 'Checkout failed.'
-                }
+                success { echo 'Checkout successful.' }
+                failure { echo 'Checkout failed.' }
             }
         }
 
@@ -28,12 +28,8 @@ pipeline {
                 sh 'npm run build'
             }
             post {
-                success {
-                    echo 'Build successful.'
-                }
-                failure {
-                    echo 'Build failed.'
-                }
+                success { echo 'Build successful.' }
+                failure { echo 'Build failed.' }
             }
         }
 
@@ -42,12 +38,8 @@ pipeline {
                 archiveArtifacts artifacts: 'build/**', fingerprint: true
             }
             post {
-                success {
-                    echo 'Artifacts archived successfully.'
-                }
-                failure {
-                    echo 'Artifact archiving failed.'
-                }
+                success { echo 'Artifacts archived successfully.' }
+                failure { echo 'Artifact archiving failed.' }
             }
         }
 
@@ -55,27 +47,20 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: "${SONARQUBE_CREDENTIALS_ID}", variable: 'SONAR_TOKEN')]) {
                     script {
-                        // Echo the SonarQube URL for debugging
                         echo "SonarQube URL: ${params.SONARQUBE_URL}"
-
-                        // Run the sonar-scanner command
                         sh """
                             /opt/sonar-scanner/sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner \
-                                -Dsonar.projectKey=react-app \\
-                                -Dsonar.sources=src \\
-                                -Dsonar.host.url=http://52.3.63.167:9000 \\
+                                -Dsonar.projectKey=react-app \
+                                -Dsonar.sources=src \
+                                -Dsonar.host.url=${params.SONARQUBE_URL} \
                                 -Dsonar.login=$SONAR_TOKEN
                         """
                     }
                 }
             }
             post {
-                success {
-                    echo 'SonarQube analysis successful.'
-                }
-                failure {
-                    echo 'SonarQube analysis failed.'
-                }
+                success { echo 'SonarQube analysis successful.' }
+                failure { echo 'SonarQube analysis failed.' }
             }
         }
 
@@ -84,12 +69,8 @@ pipeline {
                 sh 'docker build -t srikanth6520/react-app:latest .'
             }
             post {
-                success {
-                    echo 'Docker image built successfully.'
-                }
-                failure {
-                    echo 'Docker image build failed.'
-                }
+                success { echo 'Docker image built successfully.' }
+                failure { echo 'Docker image build failed.' }
             }
         }
 
@@ -103,12 +84,8 @@ pipeline {
                 }
             }
             post {
-                success {
-                    echo 'Docker image pushed to DockerHub successfully.'
-                }
-                failure {
-                    echo 'Docker image push to DockerHub failed.'
-                }
+                success { echo 'Docker image pushed to DockerHub successfully.' }
+                failure { echo 'Docker image push to DockerHub failed.' }
             }
         }
     }
