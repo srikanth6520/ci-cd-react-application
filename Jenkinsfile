@@ -5,7 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds-id'   
         SONARQUBE_CREDENTIALS_ID = 'sonarqube-creds-id'   
         SONARQUBE_URL = 'http://your-sonarqube-server-url' 
-        GITHUB_CREDENTIALS_ID = 'github-creds-id'         
+        GITHUB_CREDENTIALS_ID = 'github-credentilas'         
     }
 
     stages {
