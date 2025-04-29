@@ -10,7 +10,7 @@ RUN npm install
 # Copy all application source code
 COPY . .
 
-# Build the React app for production
+# Build the React app
 RUN npm run build
 
 # Stage 2: Serve the React app with Nginx
