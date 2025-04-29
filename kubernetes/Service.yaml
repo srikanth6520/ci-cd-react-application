@@ -1,5 +1,5 @@
-apiVersion: v1 
-kind: Service 
+apiVersion: v1
+kind: Service
 metadata:
   name: react-service
   namespace: testing
@@ -7,10 +7,9 @@ metadata:
     app: react-app
 spec:
   type: NodePort
-  selector: 
+  selector:
     app: react-app
   ports:
     - port: 80
       targetPort: 80
-      NodePort: 30080
-    
+      nodePort: 30080
