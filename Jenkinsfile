@@ -7,6 +7,10 @@ pipeline {
         GITHUB_CREDENTIALS_ID = 'github-credentials'         
     }
 
+    parameters {
+        string(name: 'SONARQUBE_URL', defaultValue: 'http://localhost:9000', description: 'SonarQube Server URL')
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -82,6 +86,19 @@ pipeline {
             post {
                 success { echo 'Docker image pushed to DockerHub successfully.' }
                 failure { echo 'Docker image push to DockerHub failed.' }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl apply -f kubernetes/deployment.yaml'
+                    sh 'kubectl apply -f kubernetes/service.yaml'
+                }
+            }
+            post {
+                success { echo 'Deployment to Kubernetes successful.' }
+                failure { echo 'Deployment to Kubernetes failed.' }
             }
         }
     }
