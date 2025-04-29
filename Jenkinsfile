@@ -54,13 +54,19 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withCredentials([string(credentialsId: "${SONARQUBE_CREDENTIALS_ID}", variable: 'SONAR_TOKEN')]) {
-                    sh """
-                        sonar-scanner \\
-                            -Dsonar.projectKey=react-app \\
-                            -Dsonar.sources=src \\
-                            -Dsonar.host.url=${params.SONARQUBE_URL} \\
-                            -Dsonar.login=$SONAR_TOKEN
-                    """
+                    script {
+                        // Echo the SonarQube URL for debugging
+                        echo "SonarQube URL: ${params.SONARQUBE_URL}"
+
+                        // Run the sonar-scanner command
+                        sh """
+                            sonar-scanner \\
+                                -Dsonar.projectKey=react-app \\
+                                -Dsonar.sources=src \\
+                                -Dsonar.host.url=${params.SONARQUBE_URL} \\
+                                -Dsonar.login=$SONAR_TOKEN
+                        """
+                    }
                 }
             }
             post {
