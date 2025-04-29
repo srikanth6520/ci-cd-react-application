@@ -4,13 +4,16 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds-id'   
         SONARQUBE_CREDENTIALS_ID = 'sonarqube-creds-id'   
-        SONARQUBE_URL = 'http://your-sonarqube-server-url'
+        SONARQUBE_URL = 'http://your-sonarqube-server-url' 
+        GITHUB_CREDENTIALS_ID = 'github-creds-id'         
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/srikanth6520/ci-cd-react-application.git'
+                withCredentials([usernamePassword(credentialsId: "${GITHUB_CREDENTIALS_ID}", usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                    sh 'git clone https://$GIT_USER:$GIT_PASS@github.com/srikanth6520/ci-cd-react-application.git'
+                }
             }
         }
 
