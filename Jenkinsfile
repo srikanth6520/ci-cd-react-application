@@ -60,10 +60,10 @@ pipeline {
 
                         // Run the sonar-scanner command
                         sh """
-                            sonar-scanner \\
+                            /opt/sonar-scanner/sonar-scanner-6.2.1.4610-linux-x64/bin/sonar-scanner \
                                 -Dsonar.projectKey=react-app \\
                                 -Dsonar.sources=src \\
-                                -Dsonar.host.url=${params.SONARQUBE_URL} \\
+                                -Dsonar.host.url=http://52.3.63.167:9000 \\
                                 -Dsonar.login=$SONAR_TOKEN
                         """
                     }
