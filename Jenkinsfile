@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds-id'   
-        SONARQUBE_CREDENTIALS_ID = 'sonarqube-creds-id'   
+        DOCKERHUB_CREDENTIALS_ID = 'docker-hub-credentials'   
+        SONARQUBE_CREDENTIALS_ID = 'sonarqube-token'   
         SONARQUBE_URL = 'http://your-sonarqube-server-url' 
         GITHUB_CREDENTIALS_ID = 'github-credentilas'         
     }
