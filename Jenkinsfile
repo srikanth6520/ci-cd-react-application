@@ -58,7 +58,7 @@ pipeline {
                         sonar-scanner \\
                             -Dsonar.projectKey=react-app \\
                             -Dsonar.sources=src \\
-                            -Dsonar.host.url=${SONARQUBE_URL} \\
+                            -Dsonar.host.url=${params.SONARQUBE_URL} \\
                             -Dsonar.login=$SONAR_TOKEN
                     """
                 }
