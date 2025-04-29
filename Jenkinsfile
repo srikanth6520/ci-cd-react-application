@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds-id'   // ID of your DockerHub credentials stored in Jenkins
-        SONARQUBE_CREDENTIALS_ID = 'sonarqube-creds-id'   // ID of your SonarQube credentials stored in Jenkins
-        SONARQUBE_URL = 'http://your-sonarqube-server-url' // Example: http://34.201.12.45:9000
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds-id'   
+        SONARQUBE_CREDENTIALS_ID = 'sonarqube-creds-id'   
+        SONARQUBE_URL = 'http://your-sonarqube-server-url'
     }
 
     stages {
