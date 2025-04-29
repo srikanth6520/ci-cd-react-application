@@ -11,9 +11,8 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                withCredentials([usernamePassword(credentialsId: "${GITHUB_CREDENTIALS_ID}", usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
-                    sh 'git clone https://$GIT_USER:$GIT_PASS@github.com/srikanth6520/ci-cd-react-application.git'
-                }
+                // Jenkins automatically checks out code from SCM
+                checkout scm
             }
         }
 
@@ -34,11 +33,11 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: "${SONARQUBE_CREDENTIALS_ID}", variable: 'SONAR_TOKEN')]) {
                     sh """
-                        sonar-scanner \
-                            -Dsonar.projectKey=react-app \
-                            -Dsonar.sources=src \
-                            -Dsonar.host.url=$SONARQUBE_URL \
-                            -Dsonar.login=$SONAR_TOKEN
+                        sonar-scanner \\
+                            -Dsonar.projectKey=react-app \\
+                            -Dsonar.sources=src \\
+                            -Dsonar.host.url=${SONARQUBE_URL} \\
+                            -Dsonar.login=${SONAR_TOKEN}
                     """
                 }
             }
@@ -59,6 +58,12 @@ pipeline {
                     """
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs() // Clean up workspace after pipeline run
         }
     }
 }
