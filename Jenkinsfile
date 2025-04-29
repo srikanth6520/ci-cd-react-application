@@ -5,14 +5,21 @@ pipeline {
         DOCKERHUB_CREDENTIALS_ID = 'docker-hub-credentials'   
         SONARQUBE_CREDENTIALS_ID = 'sonarqube-token'   
         SONARQUBE_URL = 'http://your-sonarqube-server-url' 
-        GITHUB_CREDENTIALS_ID = 'github-credentilas'         
+        GITHUB_CREDENTIALS_ID = 'github-credentials'         
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                // Jenkins automatically checks out code from SCM
                 checkout scm
+            }
+            post {
+                success {
+                    echo 'Checkout successful.'
+                }
+                failure {
+                    echo 'Checkout failed.'
+                }
             }
         }
 
@@ -21,11 +28,27 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build'
             }
+            post {
+                success {
+                    echo 'Build successful.'
+                }
+                failure {
+                    echo 'Build failed.'
+                }
+            }
         }
 
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'build/**', fingerprint: true
+            }
+            post {
+                success {
+                    echo 'Artifacts archived successfully.'
+                }
+                failure {
+                    echo 'Artifact archiving failed.'
+                }
             }
         }
 
@@ -41,11 +64,27 @@ pipeline {
                     """
                 }
             }
+            post {
+                success {
+                    echo 'SonarQube analysis successful.'
+                }
+                failure {
+                    echo 'SonarQube analysis failed.'
+                }
+            }
         }
 
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t srikanth6520/react-app:latest .'
+            }
+            post {
+                success {
+                    echo 'Docker image built successfully.'
+                }
+                failure {
+                    echo 'Docker image build failed.'
+                }
             }
         }
 
@@ -58,12 +97,21 @@ pipeline {
                     """
                 }
             }
+            post {
+                success {
+                    echo 'Docker image pushed to DockerHub successfully.'
+                }
+                failure {
+                    echo 'Docker image push to DockerHub failed.'
+                }
+            }
         }
     }
 
     post {
         always {
-            cleanWs() // Clean up workspace after pipeline run
+            cleanWs()
+            echo 'Workspace cleaned up.'
         }
     }
 }
