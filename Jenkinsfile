@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'SONARQUBE_URL', defaultValue: '', description: 'SonarQube server URL')
-    }
-
     environment {
         DOCKERHUB_CREDENTIALS_ID = 'docker-hub-credentials'   
         SONARQUBE_CREDENTIALS_ID = 'sonarqube-token'   
