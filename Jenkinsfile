@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'SONARQUBE_URL', defaultValue: 'http://52.3.63.167:9000', description: 'SonarQube server URL')
+        string(name: 'SONARQUBE_URL', defaultValue: '', description: 'SonarQube server URL')
     }
 
     environment {
