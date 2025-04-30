@@ -2,6 +2,22 @@
 
 This is a basic React application that displays "Hello, React World!".
 
+# Prerequisites:-
+    • Github Repository
+    • Required Code with Dependencies
+    • Jenkins Server
+    • Jenkins Version: 2.492.3
+    • Java Runtime Version: 21.0.6
+    • Node.js and npm
+    • Docker
+    • Docker Version: 28.1.1
+    • SonarQube
+    • Version: 10.7.0.96327
+    • Sonar Scanner
+    • Docker Hub Repository
+    • k3d Cluster
+
+
 ## File Structure
 
 ci-cd-react-application/
