@@ -104,9 +104,19 @@ pipeline {
     }
 
     post {
-        always {
-            cleanWs()
-            echo 'Workspace cleaned up.'
+        success {
+            emailext(
+                subject: "Jenkins Pipeline Successful: ${JOB_NAME} - ${BUILD_NUMBER}",
+                body: "The pipeline run was successful!",
+                to: "srikanthkolluri405@gmail.com"
+            )
+        }
+        failure {
+            emailext(
+                subject: "Jenkins Pipeline Failed: ${JOB_NAME}",
+                body: "The pipeline run has failed!",
+                to: "srikanthkolluri405@gmail.com"
+            )
         }
     }
 }
