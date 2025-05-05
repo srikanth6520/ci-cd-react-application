@@ -4,7 +4,7 @@ This is a basic React application that displays "Hello, React World!".
 
 # Prerequisites:-
     • Github Repository
-    • Required Code with Dependencies
+    • React Code with Dependencies
     • Jenkins Server
     • Jenkins Version: 2.492.3
     • Java Runtime Version: 21.0.6
